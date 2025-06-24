@@ -1,10 +1,12 @@
+use crate::data_structure::city::City;
+
 const EARTH_RADIUS: f64 = 6371.0;
 
-pub fn calculate_distance_value(lat1: f64, lon1: f64, lat2: f64, lon2: f64) -> f64 {
-    let d_lat = (lat2 - lat1).to_radians();
-    let d_lon = (lon2 - lon1).to_radians();
-    let lat1_rad = lat1.to_radians();
-    let lat2_rad = lat2.to_radians();
+pub fn calculate_distance_value(lat_origin: f64, lon_origin: f64,lat_destiny: f64, lon_destiny: f64) -> f64 {
+    let d_lat = (lat_destiny - lat_origin).to_radians();
+    let d_lon = (lon_destiny - lon_origin).to_radians();
+    let lat1_rad = lat_origin.to_radians();
+    let lat2_rad = lat_destiny.to_radians();
 
     let a =
         f64::sin(d_lat / 2.0).powi(2) +

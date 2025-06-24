@@ -1,15 +1,13 @@
 use crate::functions;
 use functions::calculate::calculate_distance_value;
-use functions::calculate::calculate_level;
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 pub struct City {
     name: String,
     heuristic_value: f64,
     visited: bool,
     latitude: f64,
     longitude: f64,
-    level: usize,
 }
 
 impl City {
@@ -33,7 +31,6 @@ impl City {
             visited: false,
             latitude,
             longitude,
-            level: 0,
         }
     }
 
@@ -78,21 +75,12 @@ impl City {
 
     pub fn to_string(&self) -> String {
         format!(
-            "City(name: {},heuristic_value: {}, visited: {}, latitude: {}, longitude: {}, nível: {})",
+            "City(name: {},heuristic_value: {}, visited: {}, latitude: {}, longitude: {})",
             self.name,
             self.heuristic_value,
             self.visited,
             self.latitude,
             self.longitude,
-            self.level
         )
-    }
-
-    pub fn get_level(&self) -> usize {
-        self.level
-    }
-
-    pub fn set_level(&mut self, level: usize) {
-        self.level = level;
     }
 }
