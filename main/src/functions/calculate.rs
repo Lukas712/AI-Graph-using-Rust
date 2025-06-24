@@ -1,5 +1,3 @@
-use crate::data_structure::city::City;
-
 const EARTH_RADIUS: f64 = 6371.0;
 
 pub fn calculate_distance_value(lat_origin: f64, lon_origin: f64,lat_destiny: f64, lon_destiny: f64) -> f64 {

@@ -1,11 +1,10 @@
 // src/graph_structure.rs
 use super::city::City;
-use osmpbfreader::Node;
-use petgraph::graph::{Graph, NodeIndex, Neighbors, UnGraph}; // UnGraph para grafos não direcionados
+use petgraph::graph::{Graph, NodeIndex, Neighbors};
 use std::collections::{HashMap};
 
 pub struct GraphStructure {
-    graph: Graph<City, f32>,
+    graph: Graph<City, f64>,
     city_level_map: HashMap<usize, Vec<NodeIndex>>,
 
     root: Option<NodeIndex>,
@@ -32,7 +31,7 @@ impl GraphStructure {
         return index;
     }
 
-    pub fn add_edge(&mut self, node1: NodeIndex, node2: NodeIndex, weight: f32) {
+    pub fn add_edge(&mut self, node1: NodeIndex, node2: NodeIndex, weight: f64) {
         self.graph.add_edge(node1, node2, weight);
         
     }
@@ -51,7 +50,7 @@ impl GraphStructure {
         return self.objective;
     }
     
-    pub fn get_neighbors(&self, node: NodeIndex) -> Neighbors<'_, f32> {
+    pub fn get_neighbors(&self, node: NodeIndex) -> Neighbors<'_, f64> {
         self.graph.neighbors(node)
     }
 

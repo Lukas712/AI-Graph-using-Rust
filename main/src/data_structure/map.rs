@@ -61,7 +61,7 @@ impl Map {
     }
 
     pub fn get_graph(&self) -> &GraphStructure {
-        &self.graph
+        return &self.graph
     }
 
     pub fn get_number_of_levels(&self) -> usize {
@@ -131,7 +131,7 @@ impl Map {
         for level in 0..self.get_number_of_levels() {
             if let Some(cities) = self.graph.get_entire_level(level) {
                 for city in cities {
-                    if(level < self.get_number_of_levels() - 1) {
+                    if(level <= self.get_number_of_levels() - 1) {
                         if let Some(next_cities) = self.graph.get_entire_level(level + 1) {
                             for next_city in next_cities {
                                 let distance = calculate_distance_value(
@@ -140,7 +140,7 @@ impl Map {
                                     self.graph.get_city(next_city).unwrap().get_latitude(),
                                     self.graph.get_city(next_city).unwrap().get_longitude(),
                                 );
-                                self.graph.add_edge(city, next_city, distance as f32);
+                                self.graph.add_edge(city, next_city, distance);
                             }
                         }
                     }
