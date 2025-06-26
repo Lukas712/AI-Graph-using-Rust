@@ -60,7 +60,7 @@ pub fn get_all_cities_from_bounding_box(
     let query = format!(
         r#"[out:json];
         node
-          ["place"~"city|town|village|hamlet"]
+          ["place"~"city|town|village"]
           ({});
         out;"#,
         bbox.to_overpass_format()

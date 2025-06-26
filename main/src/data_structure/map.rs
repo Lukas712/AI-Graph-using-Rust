@@ -1,12 +1,14 @@
-use std::usize::MIN;
+use rand::seq::index;
+use rand::Rng;
 
 use super::graph::GraphStructure;
 
 use crate::functions::calculate::{calculate_distance_value, calculate_level};
 use crate::functions::get_from_api::{get_all_cities_from_bounding_box, get_city_coordinates};
 use crate::data_structure::{bounding_box::BoundingBox, city::City};
+use crate::functions::between_cities::is_between_bounding_box;
 
-const MARGIN_DEGREES: f64 = 0.5;
+const MARGIN_DEGREES: f64 = 0.1;
 const MIN_BANDS: usize = 2;
 
 pub struct Map {
@@ -68,9 +70,16 @@ impl Map {
         return self.number_of_levels.unwrap();
     }
     pub fn insert_city(&mut self, city: City){
-        let index = self.graph.get_root().unwrap();
-        let level = self.calculate_level(&city, self.graph.get_city(index).unwrap());
-        self.graph.insert_city(level, city);
+        let index_root = self.graph.get_root().unwrap();
+        let index_objective = self.graph.get_objective().unwrap();
+
+        if(is_between_bounding_box(self.get_graph(),index_root, index_objective, &city)) {
+
+            if(city.get_heuristic_value()< self.graph.get_city(index_root).unwrap().get_heuristic_value()) {
+                let level = self.calculate_level(&city, self.graph.get_city(index_root).unwrap());
+                self.graph.insert_city(level, city);
+            }
+        }
     }
 
     pub fn calculate_level(
@@ -99,7 +108,7 @@ impl Map {
     }
 
     fn calculate_number_of_levels(&mut self, origin: &City) {
-    let max_band_km = 50.0;
+    let max_band_km = 25.0;
     let distance: f64 = origin.get_heuristic_value();
     let n_bands = (distance / max_band_km).ceil() as usize;
     let n_bands = n_bands.max(MIN_BANDS);
@@ -140,7 +149,11 @@ impl Map {
                                     self.graph.get_city(next_city).unwrap().get_latitude(),
                                     self.graph.get_city(next_city).unwrap().get_longitude(),
                                 );
-                                self.graph.add_edge(city, next_city, distance);
+
+                                let mut rng = rand::thread_rng();
+                                let margin_error: f64 = rng.gen_range(0.15..0.3);
+                                // let margin_error = 0.0;
+                                self.graph.add_edge(city, next_city, distance* (1.0 + margin_error));
                             }
                         }
                     }

@@ -1,3 +1,3 @@
-pub mod backtracking;
-pub mod deep_search;
-pub mod breadth_first_search;
+pub mod greedy_search;
+pub mod a_star;
+pub mod ida_star;

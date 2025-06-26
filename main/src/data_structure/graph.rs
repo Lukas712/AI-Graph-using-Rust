@@ -42,6 +42,12 @@ impl GraphStructure {
         });
     }
 
+    pub fn get_edge_weight(&self, node1: NodeIndex, node2: NodeIndex) -> f64 {
+        self.graph.edge_weight(self.graph.find_edge(node1, node2).unwrap())
+            .cloned()
+            .unwrap_or(f64::INFINITY)
+    }
+
     pub fn get_root(&self) -> Option<NodeIndex> {
         return self.root;
     }
