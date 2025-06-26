@@ -6,10 +6,6 @@ pub fn breadth_first_search(graph: &GraphStructure) -> Option<Vec<NodeIndex>> {
     let root = graph.get_root()?;
     let objective = graph.get_objective()?;
 
-    println!("Iniciando busca em largura...");
-    println!("Raiz: {:?}", graph.get_city(root).unwrap().get_name());
-    println!("Objetivo: {:?}", graph.get_city(objective).unwrap().get_name());
-
     let mut queue = VecDeque::new();
     queue.push_back(root);
 
@@ -28,12 +24,10 @@ pub fn breadth_first_search(graph: &GraphStructure) -> Option<Vec<NodeIndex>> {
         }
 
         if current == objective {
-            println!("--> Encontrou o objetivo!");
             return Some(reconstruct_path(&parent_map, current, root));
         }
     }
-
-    println!("Nenhum caminho encontrado");
+    
     None
 }
 
