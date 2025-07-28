@@ -1,3 +1,4 @@
+#![allow(warnings)]
 mod data_structure;
 use data_structure::map::Map;
 
@@ -21,6 +22,7 @@ use crate::functions::path_distance::calculate_path_distance;
 use crate::functions::results::{print_no_result, print_path};
 
 use std::io::{self, Write};
+
 
 fn main() {
     start_execution();

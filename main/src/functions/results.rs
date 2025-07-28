@@ -1,12 +1,12 @@
 use crate::data_structure::{map::Map, search_results::SearchResult};
 
 /// Imprime os resultados da busca, incluindo estatísticas e detalhes do caminho.
-fn print_results(search_result: SearchResult) {
+fn print_results(search_result: SearchResult, map: &Map) {
     println!("\nEstatísticas da busca:");
     println!("- Distância do caminho: {:.2} KM", search_result.path_distance);
     println!("- Nós visitados: {}", search_result.visited);
     println!("- Nós expandidos: {}", search_result.expanded);
-    println!("- Profundidade máxima: {}", search_result.depth);
+    println!("- Profundidade máxima: {}", map.get_number_of_levels());
     println!("- Fator de ramificação médio: {:.2}", search_result.avg_branching_factor);
     println!("- Tempo de execução: {:.4} segundos", search_result.execution_time.as_secs_f64());
     println!();
@@ -29,7 +29,7 @@ pub fn print_path(search_result: SearchResult, map: &Map) {
         println!();
     }
 
-    print_results(search_result);
+    print_results(search_result, map);
     println!();
 }
 

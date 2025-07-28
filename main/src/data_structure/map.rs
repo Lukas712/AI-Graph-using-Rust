@@ -181,7 +181,7 @@ impl Map {
                                 );
 
                                 let mut rng = rand::thread_rng();
-                                let margin_error: f64 = rng.gen_range(0.15..0.3);
+                                let margin_error: f64 = rng.gen_range(0.15..0.6);
                                 // let margin_error = 0.0;
                                 self.graph.add_edge(city, next_city, distance* (1.0 + margin_error));
                             }
