@@ -14,9 +14,9 @@ fn print_results(search_result: SearchResult) {
 pub fn print_path(search_result: SearchResult, map: &Map) {
     
     if let Some(ref path) = search_result.path {
-        println!("Caminho encontrado:");
+        println!("Detalhes sobre as cidades no caminho:");
         for city in path {
-            println!("Cidade: {}, Heurística: {}, Latitude: {}, Longitude: {}", 
+            println!("- Cidade: {}, Heurística: {}, Latitude: {}, Longitude: {}", 
             map.get_graph().get_city(*city).unwrap().get_name(), 
             map.get_graph().get_city(*city).unwrap().get_heuristic_value(), 
             map.get_graph().get_city(*city).unwrap().get_latitude(), 

@@ -1,55 +1,70 @@
 use crate::data_structure::graph::GraphStructure;
 use petgraph::graph::NodeIndex;
-use rayon::prelude::*;
+use std::time::Instant;
+use crate::data_structure::search_results::SearchResult;
+use crate::functions::path_distance::calculate_path_distance;
 use std::collections::{HashSet, VecDeque};
 
-pub fn depth_limited_search(
+pub fn depth_search(
     graph: &GraphStructure,
-    depth_limit: usize,
-) -> Option<Vec<NodeIndex>> {
+) -> Option<SearchResult> {
+    let start_time = Instant::now();
     let root = graph.get_root()?;
     let objective = graph.get_objective()?;
 
-    let neighbors: Vec<NodeIndex> = graph.get_neighbors(root).collect();
-    
-    neighbors.into_par_iter().find_map_any(|neighbor| {
-        let mut visited = HashSet::new();
-        visited.insert(root);
-        visited.insert(neighbor);
-        
-        let mut stack = VecDeque::new();
-        stack.push_back((neighbor, 1, vec![root, neighbor]));
-        
-        dls_task(graph, objective, &mut stack, &mut visited, depth_limit)
-    })
-}
+    let mut visited: i32 = 0;
+    let mut expanded: i32 = 0;
+    let mut total_expanded: i32 = 0;
+    let mut max_depth: i32 = 0;
 
-fn dls_task(
-    graph: &GraphStructure,
-    objective: NodeIndex,
-    stack: &mut VecDeque<(NodeIndex, usize, Vec<NodeIndex>)>,
-    visited: &mut HashSet<NodeIndex>,
-    depth_limit: usize,
-) -> Option<Vec<NodeIndex>> {
+    let mut visited_nodes = HashSet::new();
+    visited_nodes.insert(root);
+    
+    let mut stack = VecDeque::new();
+    stack.push_back((root, 0, vec![root]));
+
     while let Some((current, depth, path)) = stack.pop_back() {
-        if current == objective {
-            return Some(path);
+        visited += 1;
+        
+        let current_depth = depth as i32;
+        if current_depth > max_depth {
+            max_depth = current_depth;
         }
 
-        if depth >= depth_limit {
-            continue;
+        if current == objective {
+            return Some(SearchResult {
+                path_distance: calculate_path_distance(graph, path.clone()),
+                visited,
+                expanded,
+                avg_branching_factor: if expanded > 0 { total_expanded as f32 / expanded as f32 } else { 0.0 },
+                depth: current_depth,
+                execution_time: start_time.elapsed(),
+                path: Some(path),
+            });
         }
 
         let neighbors: Vec<NodeIndex> = graph.get_neighbors(current)
-            .filter(|n| !visited.contains(n))
+            .filter(|n| !visited_nodes.contains(n))
             .collect();
         
-        for neighbor in neighbors {
-            visited.insert(neighbor);
+        total_expanded += neighbors.len() as i32;
+        expanded += 1;
+
+        for neighbor in neighbors.into_iter().rev() {
+            visited_nodes.insert(neighbor);
             let mut new_path = path.clone();
             new_path.push(neighbor);
             stack.push_back((neighbor, depth + 1, new_path));
         }
     }
-    None
+
+    Some(SearchResult {
+        path_distance: 0.0,
+        visited,
+        expanded,
+        avg_branching_factor: if expanded > 0 { total_expanded as f32 / expanded as f32 } else { 0.0 },
+        depth: max_depth,
+        execution_time: start_time.elapsed(),
+        path: None,
+    })
 }

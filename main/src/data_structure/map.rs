@@ -8,7 +8,7 @@ use crate::functions::get_from_api::{get_all_cities_from_bounding_box, get_city_
 use crate::data_structure::{bounding_box::BoundingBox, city::City};
 use crate::functions::between_cities::is_between_bounding_box;
 
-const MARGIN_DEGREES: f64 = 0.1;
+const MARGIN_DEGREES: f64 = 0.5;
 const MIN_BANDS: usize = 2;
 
 pub struct Map {
@@ -185,6 +185,7 @@ impl Map {
                 println!("  Nenhuma cidade neste nível.");
             }
         }
+        println!();
     }
 
 
