@@ -5,6 +5,7 @@ use std::time::Instant;
 use crate::data_structure::search_results::SearchResult;
 use crate::functions::path_distance::calculate_path_distance;
 
+/// Realiza uma busca A* no grafo, utilizando o acúmulo de distâncias e o valor da heurística como base.
 pub fn a_star_search(graph: &GraphStructure) -> Option<SearchResult> {
     let start_time = Instant::now();
     let root = graph.get_root()?;
@@ -86,6 +87,12 @@ pub fn a_star_search(graph: &GraphStructure) -> Option<SearchResult> {
     })
 }
 
+
+/// Estrutura para armazenar o estado de um nó na fila de prioridade.
+/// 
+/// Atributos:
+/// - `node`: Índice do nó no grafo.
+/// - `f_score`: Valor da função f(n) = g(n) + h(n
 #[derive(PartialEq, PartialOrd)]
 struct State {
     node: NodeIndex,
@@ -94,6 +101,7 @@ struct State {
 
 impl Eq for State {}
 impl Ord for State {
+    /// Compara dois estados com base no valor da função f(n).
     fn cmp(&self, other: &Self) -> std::cmp::Ordering {
         other.f_score.partial_cmp(&self.f_score).unwrap()
     }

@@ -5,6 +5,8 @@ use crate::data_structure::search_results::SearchResult;
 use crate::functions::path_distance::calculate_path_distance;
 use std::collections::{HashSet, VecDeque};
 
+
+/// Realiza uma busca em profundidade no grafo, explorando os nós mais novos do grafo.
 pub fn depth_search(
     graph: &GraphStructure,
 ) -> Option<SearchResult> {

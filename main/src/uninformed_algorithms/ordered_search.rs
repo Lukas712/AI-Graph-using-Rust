@@ -4,6 +4,8 @@ use petgraph::graph::NodeIndex;
 use std::time::Instant;
 use crate::functions::path_distance::calculate_path_distance;
 
+
+/// Realiza uma busca gulosa no grafo, priorizando o custo mínimo acumulado entre as cidades.
 pub fn ordered_search(graph: &GraphStructure) -> Option<SearchResult> {
     let start_time = Instant::now();
     let root = graph.get_root()?;
@@ -98,6 +100,13 @@ pub fn ordered_search(graph: &GraphStructure) -> Option<SearchResult> {
     })
 }
 
+
+////// Estrutura para armazenar o estado de um nó na busca ordenada.
+/// 
+/// Atributos:
+/// - `node`: Índice do nó no grafo.
+/// - `cost`: Custo acumulado até o nó.
+/// - `depth`: Profundidade do nó na árvore de busca.
 #[derive(PartialEq, PartialOrd)]
 struct State {
     node: NodeIndex,

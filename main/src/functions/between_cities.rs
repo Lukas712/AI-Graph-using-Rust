@@ -3,6 +3,7 @@ use crate::data_structure::graph::GraphStructure;
 
 use petgraph::graph::NodeIndex;
 
+/// Verifica se uma cidade está entre duas outras cidades, considerando a caixa delimitadora.
 pub fn is_between_bounding_box(
     graph: &GraphStructure,
     origin_city: NodeIndex,

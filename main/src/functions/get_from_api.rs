@@ -4,6 +4,9 @@ use std::error::Error;
 
 use crate::data_structure::bounding_box::BoundingBox;
 
+/// Obtém as coordenadas de uma cidade a partir do nome da cidade usando a API Overpass.
+/// 
+/// Retorna um `Result` com as coordenadas (latitude, longitude) ou um erro se a cidade não for encontrada.
 pub fn get_city_coordinates(city_name: &str) -> Result<(f64, f64), Box<dyn Error>> {
     println!("Obtendo a cidade {}...", city_name);
     let start_time = std::time::Instant::now();
@@ -62,7 +65,8 @@ pub fn get_city_coordinates(city_name: &str) -> Result<(f64, f64), Box<dyn Error
     Err(format!("Cidade '{}' não encontrada", city_name).into())
 }
 
-
+/// Obtém todas as cidades dentro de uma caixa delimitadora (bounding box) usando a API Overpass.
+/// Retorna um `Result` com um vetor de tuplas contendo o nome da cidade, latitude e longitude, ou um erro se não for possível obter as cidades.
 pub fn get_all_cities_from_bounding_box(
     bbox: BoundingBox,
     root: String,

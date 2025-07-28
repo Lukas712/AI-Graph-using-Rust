@@ -4,6 +4,8 @@ use std::time::Instant;
 use crate::data_structure::search_results::SearchResult;
 use crate::functions::path_distance::calculate_path_distance;
 
+
+/// Realiza uma busca gulosa no grafo, priorizando os nós com menor valor heurístico.
 pub fn greedy_search(graph: &GraphStructure) -> Option<SearchResult> {
     let start_time = Instant::now();
     let root = graph.get_root()?;

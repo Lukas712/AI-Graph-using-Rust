@@ -12,6 +12,14 @@ const MARGIN_DEGREES: f64 = 0.5;
 const MIN_BANDS: usize = 2;
 const MARGIN_KM: f64 = 5.0;
 
+
+
+/// A estrutura de dados `Map` representa um mapa, contendo um grafo de cidades e caminhos.
+/// 
+/// Atributos:
+/// - `graph`: Um grafo que representa as cidades e os caminhos entre elas.
+/// - `bbox`: Uma caixa delimitadora que define a área geográfica do mapa.
+/// - `number_of_levels`: O número de níveis no grafo, usado para organizar as
 pub struct Map {
     graph: GraphStructure,
     bbox: Option<BoundingBox>,
@@ -19,6 +27,7 @@ pub struct Map {
 }
 
 impl Map {
+    /// Construtor para criar um novo mapa a partir de duas cidades: a cidade de origem e a cidade objetivo.
     pub fn new(
         root_city: String,
         objective_city: String
@@ -63,13 +72,17 @@ impl Map {
         Ok(map)
     }
 
+    /// Retorna uma referência ao grafo contido no mapa.
     pub fn get_graph(&self) -> &GraphStructure {
         return &self.graph
     }
 
+    /// Retorna o número de níveis do grafo.
     pub fn get_number_of_levels(&self) -> usize {
         return self.number_of_levels.unwrap();
     }
+
+    /// Insere uma nova cidade no grafo, se ela estiver dentro da caixa delimitadora do mapa.
     pub fn insert_city(&mut self, city: City){
         let index_root = self.graph.get_root().unwrap();
         let index_objective = self.graph.get_objective().unwrap();
@@ -83,6 +96,7 @@ impl Map {
         }
     }
 
+    ///Calcula o nível de uma cidade com base em sua heurística e a heurística da cidade de origem.
     pub fn calculate_level(
         &self,
         city: &City,
@@ -91,23 +105,28 @@ impl Map {
         return calculate_level(city.get_heuristic_value(), origin.get_heuristic_value(), self.number_of_levels.unwrap());
     }
 
+    /// Insere a cidade de origem no grafo e define-a como raiz.
     pub fn insert_origin(&mut self, origin: City) {
         let level = self.calculate_level(&origin, &origin);
         let root = self.graph.insert_city(level, origin);
         self.graph.set_root(root);
     }
+
+    /// Insere a cidade objetivo no grafo e define-a como objetivo.
     pub fn insert_objective(&mut self, objective: City, origin: City) {
         let level = self.calculate_level(&objective, &origin);
         let objective = self.graph.insert_city(level, objective);
         self.graph.set_objective(objective);
     }
 
+    /// Cria uma caixa delimitadora com base nas cidades de origem e objetivo.
     fn create_bounding_box(&mut self){
         let index_root = self.graph.get_root().unwrap();
         let index_objective = self.graph.get_objective().unwrap();
         self.bbox = Some(BoundingBox::from_cities(self.graph.get_city(index_root).unwrap(), self.graph.get_city(index_objective).unwrap(), MARGIN_DEGREES));
     }
 
+    /// Calcula o número de níveis do grafo com base na distância heurística da cidade de origem.
     fn calculate_number_of_levels(&mut self, origin: &City) {
         let distance: f64 = origin.get_heuristic_value();
         
@@ -121,6 +140,7 @@ impl Map {
         self.number_of_levels = Some(n_bands);
     }
 
+    /// Cria as cidades do mapa a partir da API [`Overpass`], inserindo as cidades que estão entre as cidades `Origem` e `Destino` dentro da [`BoundingBox`].
     fn create_map_cities(&mut self) -> Result<(), Box<dyn std::error::Error>> 
     {
         let all_cities = get_all_cities_from_bounding_box(
@@ -145,6 +165,7 @@ impl Map {
         Ok(())
     }
 
+    /// Cria os caminhos entre as cidades do mapa, adicionando arestas ao grafo.
     fn create_map_paths(&mut self) {
         for level in 0..self.get_number_of_levels() {
             if let Some(cities) = self.graph.get_entire_level(level) {
@@ -171,6 +192,7 @@ impl Map {
         }
     }
 
+    /// Imprime as cidades do grafo organizadas por níveis.
     pub fn print_graph_by_levels(&self) {
         println!("Número de níveis: {}", self.get_number_of_levels());
         for level in 0..self.get_number_of_levels() + 1{

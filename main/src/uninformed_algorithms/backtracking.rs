@@ -4,6 +4,7 @@ use std::{collections::VecDeque, time::Instant};
 use crate::data_structure::search_results::SearchResult;
 use crate::functions::path_distance::calculate_path_distance;
 
+/// Realiza uma busca por retrocesso (backtracking) no grafo, explorando todos os caminhos possíveis, mesmo que já tenham sido visitados.
 pub fn backtracking(graph: &GraphStructure) -> Option<SearchResult> {
     let start_time = Instant::now();
     let root = graph.get_root()?;

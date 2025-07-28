@@ -1,6 +1,7 @@
 use crate::data_structure::graph::GraphStructure;
 use petgraph::graph::NodeIndex;
 
+/// Função para calcular a distância total de um caminho no grafo.
 pub fn calculate_path_distance(graph: &GraphStructure, path: Vec<NodeIndex>) -> f64 {
     let mut total_distance = 0.0;
 

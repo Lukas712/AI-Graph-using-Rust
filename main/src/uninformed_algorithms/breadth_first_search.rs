@@ -5,6 +5,7 @@ use std::time::Instant;
 use crate::data_structure::search_results::SearchResult;
 use crate::functions::path_distance::calculate_path_distance;
 
+/// Realiza uma busca em largura no grafo, explorando os nós mais antigos do grafo.
 pub fn breadth_first_search(graph: &GraphStructure) -> Option<SearchResult> {
     let start_time = Instant::now();
     let root = graph.get_root()?;
@@ -66,6 +67,7 @@ pub fn breadth_first_search(graph: &GraphStructure) -> Option<SearchResult> {
     })
 }
 
+/// Reconstrói o caminho a partir do mapa de pais, já que o caminho está invertido nessa minha implementação.
 fn reconstruct_path(
     parent_map: &HashMap<NodeIndex, NodeIndex>,
     mut current: NodeIndex,

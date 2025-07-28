@@ -1,5 +1,6 @@
 use crate::data_structure::{map::Map, search_results::SearchResult};
 
+/// Imprime os resultados da busca, incluindo estatísticas e detalhes do caminho.
 fn print_results(search_result: SearchResult) {
     println!("\nEstatísticas da busca:");
     println!("- Distância do caminho: {:.2} KM", search_result.path_distance);
@@ -11,6 +12,7 @@ fn print_results(search_result: SearchResult) {
     println!();
 }
 
+/// Imprime detalhes do caminho encontrado, incluindo informações sobre as cidades.
 pub fn print_path(search_result: SearchResult, map: &Map) {
     
     if let Some(ref path) = search_result.path {
@@ -31,6 +33,7 @@ pub fn print_path(search_result: SearchResult, map: &Map) {
     println!();
 }
 
+/// Imprime uma mensagem indicando que nenhum resultado foi retornado devido a um grafo inválido.
 pub fn print_no_result(){
     println!("Nenhum resultado retornado (grafo inválido).");
     println!();

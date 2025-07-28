@@ -5,6 +5,8 @@ use petgraph::graph::NodeIndex;
 use std::collections::HashSet;
 use std::time::Instant;
 
+
+/// Realiza uma busca A* iterativa (IDA*) no grafo, utilizando heurísticas para otimizar a busca.
 pub fn ida_star_search(graph: &GraphStructure) -> Option<SearchResult> {
     let start_time = Instant::now();
     let root = graph.get_root()?;

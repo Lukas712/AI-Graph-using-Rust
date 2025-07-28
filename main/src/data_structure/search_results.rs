@@ -1,5 +1,16 @@
 use petgraph::graph::NodeIndex;
 
+
+/// Estrutura para armazenar o resultado da busca.
+/// 
+/// Atributos:
+/// - `path_distance`: Distância total do caminho encontrado.
+/// - `visited`: Número de nós visitados.
+/// - `expanded`: Número de nós expandidos.
+/// - `avg_branching_factor`: Fator de ramificação médio.
+/// - `depth`: Profundidade máxima alcançada.
+/// - `execution_time`: Tempo total de execução da busca.
+/// - `path`: Caminho encontrado, se houver.
 #[derive(Clone)]
 pub struct SearchResult {
     pub path_distance: f64,

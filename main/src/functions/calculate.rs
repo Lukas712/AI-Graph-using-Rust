@@ -1,5 +1,9 @@
 const EARTH_RADIUS: f64 = 6371.0;
 
+/// Função para calcular a distância entre duas cidades usando a fórmula de Haversine.
+/// A fórmula é:
+/// d = 2 * R * arcsin(sqrt(sin²((lat2 - lat1)/2) + cos(lat1) * cos(lat2) * sin²((lon2 - lon1)/2)))
+/// Onde R é o raio da Terra (aproximadamente 6371 km).
 pub fn calculate_distance_value(lat_origin: f64, lon_origin: f64,lat_destiny: f64, lon_destiny: f64) -> f64 {
     let d_lat = (lat_destiny - lat_origin).to_radians();
     let d_lon = (lon_destiny - lon_origin).to_radians();
@@ -14,6 +18,7 @@ pub fn calculate_distance_value(lat_origin: f64, lon_origin: f64,lat_destiny: f6
     return EARTH_RADIUS * c;
 }
 
+/// Função para calcular o nível de uma cidade com base na distância heurística.
 pub fn calculate_level(
     heuristic_origin: f64,
     heuristic_destiny: f64,

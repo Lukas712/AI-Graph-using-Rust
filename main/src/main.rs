@@ -22,7 +22,35 @@ use crate::functions::results::{print_no_result, print_path};
 
 use std::io::{self, Write};
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
+fn main() {
+    start_execution();
+}
+
+fn read_input(prompt: &str) -> String {
+    print!("{}", prompt);
+    io::stdout().flush().unwrap();
+    
+    let mut input = String::new();
+    io::stdin().read_line(&mut input).unwrap();
+    
+    input.trim().to_string()
+}
+
+fn run_algorithm<F>(map: &Map, name: &str, algorithm: F)
+where
+    F: Fn(&GraphStructure) -> Option<SearchResult>,
+{
+    println!("\n--- {} ---", name);
+    algorithm(map.get_graph())
+        .map(|search_result| {
+            print_path(search_result, &map);
+        })
+        .unwrap_or_else(|| {
+            print_no_result();
+        });
+}
+
+fn start_execution() -> Result<(), Box<dyn std::error::Error>> {
     loop {
         println!("\n--- Busca de Caminho entre Cidades ---");
         println!("Digite 'sair' a qualquer momento para encerrar o programa.");
@@ -91,28 +119,4 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
 
     Ok(())
-}
-
-fn read_input(prompt: &str) -> String {
-    print!("{}", prompt);
-    io::stdout().flush().unwrap();
-    
-    let mut input = String::new();
-    io::stdin().read_line(&mut input).unwrap();
-    
-    input.trim().to_string()
-}
-
-fn run_algorithm<F>(map: &Map, name: &str, algorithm: F)
-where
-    F: Fn(&GraphStructure) -> Option<SearchResult>,
-{
-    println!("\n--- {} ---", name);
-    algorithm(map.get_graph())
-        .map(|search_result| {
-            print_path(search_result, &map);
-        })
-        .unwrap_or_else(|| {
-            print_no_result();
-        });
 }
