@@ -10,6 +10,7 @@ use crate::functions::between_cities::is_between_bounding_box;
 
 const MARGIN_DEGREES: f64 = 0.5;
 const MIN_BANDS: usize = 2;
+const MARGIN_KM: f64 = 5.0;
 
 pub struct Map {
     graph: GraphStructure,
@@ -108,12 +109,16 @@ impl Map {
     }
 
     fn calculate_number_of_levels(&mut self, origin: &City) {
-    let max_band_km = 25.0;
-    let distance: f64 = origin.get_heuristic_value();
-    let n_bands = (distance / max_band_km).ceil() as usize;
-    let n_bands = n_bands.max(MIN_BANDS);
-
-        self.number_of_levels =  Some(n_bands);
+        let distance: f64 = origin.get_heuristic_value();
+        
+        let mut current_band_size = MARGIN_KM;
+        let mut n_bands = MIN_BANDS;
+        
+        while (current_band_size * n_bands as f64) < distance {
+            current_band_size += MARGIN_KM;
+            n_bands += 1;
+        }
+        self.number_of_levels = Some(n_bands);
     }
 
     fn create_map_cities(&mut self) -> Result<(), Box<dyn std::error::Error>> 

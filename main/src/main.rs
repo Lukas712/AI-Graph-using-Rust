@@ -25,21 +25,20 @@ use std::io::{self, Write};
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     loop {
         println!("\n--- Busca de Caminho entre Cidades ---");
-        
-        // Ler cidade de origem
-        let origin_city = read_input("Digite a cidade de origem (ou 'sair' para encerrar): ");
-        if origin_city.to_lowercase() == "sair" {
+        println!("Digite 'sair' a qualquer momento para encerrar o programa.");
+        println!("Digite o nome das cidades se atentando à acentuação e ortografia.");
+        println!();
+        let origin_city = read_input("Digite a cidade de origem, (ou 'sair' para encerrar): ");
+        if origin_city.trim().to_lowercase() == "sair" {
             break;
         }
 
-        // Ler cidade de destino
         let destination_city = read_input("Digite a cidade de destino (ou 'sair' para encerrar): ");
-        if destination_city.to_lowercase() == "sair" {
+        if destination_city.trim().to_lowercase() == "sair" {
             break;
         }
 
-        // Criar mapa
-        let map = match Map::new(origin_city.to_string(), destination_city.to_string()) {
+        let map = match Map::new(origin_city.trim().to_string(), destination_city.trim().to_string()) {
             Ok(map) => map,
             Err(e) => {
                 println!("Erro ao criar mapa: {}", e);
