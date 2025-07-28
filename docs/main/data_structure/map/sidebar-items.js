@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["MARGIN_DEGREES","MARGIN_KM","MIN_BANDS"],"struct":["Map"]};

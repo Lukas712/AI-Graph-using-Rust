@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["between_cities","calculate","get_from_api","path_distance","results"]};

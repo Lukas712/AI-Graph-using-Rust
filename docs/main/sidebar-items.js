@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["main","read_input","run_algorithm","start_execution"],"mod":["data_structure","functions","informed_algorithms","uninformed_algorithms"]};

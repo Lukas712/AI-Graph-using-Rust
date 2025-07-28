@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["a_star","greedy_search","ida_star"]};

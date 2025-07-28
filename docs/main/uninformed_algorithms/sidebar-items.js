@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["backtracking","breadth_first_search","deep_search","ordered_search"]};

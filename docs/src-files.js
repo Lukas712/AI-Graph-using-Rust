@@ -1,0 +1,3 @@
+var srcIndex = new Map(JSON.parse('[["main",["",[["data_structure",[],["bounding_box.rs","city.rs","graph.rs","map.rs","mod.rs","search_results.rs"]],["functions",[],["between_cities.rs","calculate.rs","get_from_api.rs","mod.rs","path_distance.rs","results.rs"]],["informed_algorithms",[],["a_star.rs","greedy_search.rs","ida_star.rs","mod.rs"]],["uninformed_algorithms",[],["backtracking.rs","breadth_first_search.rs","deep_search.rs","mod.rs","ordered_search.rs"]]],["main.rs"]]]]'));
+createSrcSidebar();
+//{"start":36,"fragment_lengths":[445]}

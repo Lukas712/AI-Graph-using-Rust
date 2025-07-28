@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["get_all_cities_from_bounding_box","get_city_coordinates"]};

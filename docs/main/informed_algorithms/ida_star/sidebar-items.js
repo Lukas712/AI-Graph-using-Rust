@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["ida_star_search"]};

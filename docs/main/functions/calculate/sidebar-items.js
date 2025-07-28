@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["EARTH_RADIUS"],"fn":["calculate_distance_value","calculate_level"]};

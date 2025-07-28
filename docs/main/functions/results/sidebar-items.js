@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["print_no_result","print_path","print_results"]};
