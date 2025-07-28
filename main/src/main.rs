@@ -15,104 +15,78 @@ use informed_algorithms::a_star::a_star_search;
 use informed_algorithms::ida_star::ida_star_search;
 
 use crate::data_structure::city;
+use crate::data_structure::search_results::SearchResult;
 use crate::functions::path_distance::calculate_path_distance;
+use crate::functions::results::{print_no_result, print_path};
 
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
 
-    let origin_city = "Eugenópolis";
-    let destination_city = "Juiz de Fora";
+    let origin_city = "Muriaé";
+    let destination_city = "Eugenópolis";
 
     let map = Map::new(
         origin_city.to_string(),
         destination_city.to_string(),
     )?;
 
-    // map.print_graph_by_levels();
+    map.print_graph_by_levels();
 
     // backtracking(map.get_graph().clone())
-    //     .map(|path| {
-    //         println!("Caminho encontrado:");
-    //         for city in &path {
-    //             println!("Cidade: {}, Heurística: {}, Latitude: {}, Longitude: {}", map.get_graph().get_city(*city).unwrap().get_name(), map.get_graph().get_city(*city).unwrap().get_heuristic_value(), map.get_graph().get_city(*city).unwrap().get_latitude(), map.get_graph().get_city(*city).unwrap().get_longitude());
-    //         }
-    //         calculate_path_distance(map.get_graph(), path);
-    //     })
-    //     .unwrap_or_else(|| {
-    //         println!("Nenhum caminho encontrado.");
-    //     });
+    // .map(|search_result| {
+    //     print_path(search_result, &map);
+    // })
+    // .unwrap_or_else(|| {
+    //     print_no_result();
+    // });
     
     // breadth_first_search(map.get_graph().clone())
-    //     .map(|path| {
-    //         println!("Caminho encontrado:");
-    //         for city in &path {
-    //             println!("Cidade: {}, Heurística: {}, Latitude: {}, Longitude: {}", map.get_graph().get_city(*city).unwrap().get_name(), map.get_graph().get_city(*city).unwrap().get_heuristic_value(), map.get_graph().get_city(*city).unwrap().get_latitude(), map.get_graph().get_city(*city).unwrap().get_longitude());
-    //         }
-    //         calculate_path_distance(map.get_graph(), path);
-    //     })
-    //     .unwrap_or_else(|| {
-    //         println!("Nenhum caminho encontrado.");
-    //     });
+    // .map(|search_result| {
+    //     print_path(search_result, &map);
+    // })
+    // .unwrap_or_else(|| {
+    //     print_no_result();
+    // });
     
-    ordered_search(map.get_graph().clone())
-        .map(|path| {
-            println!("Caminho encontrado:");
-            for city in &path {
-                println!("Cidade: {}, Heurística: {}, Latitude: {}, Longitude: {}", map.get_graph().get_city(*city).unwrap().get_name(), map.get_graph().get_city(*city).unwrap().get_heuristic_value(), map.get_graph().get_city(*city).unwrap().get_latitude(), map.get_graph().get_city(*city).unwrap().get_longitude());
-            }
-            calculate_path_distance(map.get_graph(), path);
-        })
-        .unwrap_or_else(|| {
-            println!("Nenhum caminho encontrado.");
-        });
+    // ordered_search(map.get_graph().clone())
+    // .map(|search_result| {
+    //     print_path(search_result, &map);
+    // })
+    // .unwrap_or_else(|| {
+    //     print_no_result();
+    // });
 
     // greedy_search(map.get_graph().clone())
-    //     .map(|path| {
-    //         println!("Caminho encontrado:");
-    //         for city in &path {
-    //             println!("Cidade: {}, Heurística: {}, Latitude: {}, Longitude: {}", map.get_graph().get_city(*city).unwrap().get_name(), map.get_graph().get_city(*city).unwrap().get_heuristic_value(), map.get_graph().get_city(*city).unwrap().get_latitude(), map.get_graph().get_city(*city).unwrap().get_longitude());
-    //         }
-    //         calculate_path_distance(map.get_graph(), path);
-    //     })
-    //     .unwrap_or_else(|| {
-    //         println!("Nenhum caminho encontrado.");
-    //     });
+    // .map(|search_result| {
+    //     print_path(search_result, &map);
+    // })
+    // .unwrap_or_else(|| {
+    //     print_no_result();
+    // });
 
     // a_star_search(map.get_graph().clone())
-    //     .map(|path| {
-    //         println!("Caminho encontrado:");
-    //         for city in &path {
-    //             println!("Cidade: {}, Heurística: {}, Latitude: {}, Longitude: {}", map.get_graph().get_city(*city).unwrap().get_name(), map.get_graph().get_city(*city).unwrap().get_heuristic_value(), map.get_graph().get_city(*city).unwrap().get_latitude(), map.get_graph().get_city(*city).unwrap().get_longitude());
-    //         }
-    //         calculate_path_distance(map.get_graph(), path);
-    //     })
-    //     .unwrap_or_else(|| {
-    //         println!("Nenhum caminho encontrado.");
-    //     });
+    // .map(|search_result| {
+    //     print_path(search_result, &map);
+    // })
+    // .unwrap_or_else(|| {
+    //     print_no_result();
+    // });
 
-    // ida_star_search(map.get_graph().clone())
-    //     .map(|path| {
-    //         println!("Caminho encontrado:");
-    //         for city in &path {
-    //             println!("Cidade: {}, Heurística: {}, Latitude: {}, Longitude: {}", map.get_graph().get_city(*city).unwrap().get_name(), map.get_graph().get_city(*city).unwrap().get_heuristic_value(), map.get_graph().get_city(*city).unwrap().get_latitude(), map.get_graph().get_city(*city).unwrap().get_longitude());
-    //         }
-    //         calculate_path_distance(map.get_graph(), path);
-    //     })
-    //     .unwrap_or_else(|| {
-    //         println!("Nenhum caminho encontrado.");
-    //     });
+    ida_star_search(map.get_graph().clone())
+    .map(|search_result| {
+        print_path(search_result, &map);
+    })
+    .unwrap_or_else(|| {
+        print_no_result();
+    });
 
-    depth_limited_search(map.get_graph().clone(), map.get_number_of_levels())
-        .map(|path| {
-            println!("Caminho encontrado:");
-            for city in &path {
-                println!("Cidade: {}, Heurística: {}, Latitude: {}, Longitude: {}", map.get_graph().get_city(*city).unwrap().get_name(), map.get_graph().get_city(*city).unwrap().get_heuristic_value(), map.get_graph().get_city(*city).unwrap().get_latitude(), map.get_graph().get_city(*city).unwrap().get_longitude());
-            }
-            calculate_path_distance(map.get_graph(), path);
-        })
-        .unwrap_or_else(|| {
-            println!("Nenhum caminho encontrado.");
-        });
+    // (map.get_graph().clone())
+    // .map(|search_result| {
+    //     print_path(search_result, &map);
+    // })
+    // .unwrap_or_else(|| {
+    //     print_no_result();
+    // });
 
     Ok(())
 }

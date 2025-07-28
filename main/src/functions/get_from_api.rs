@@ -5,6 +5,8 @@ use std::error::Error;
 use crate::data_structure::bounding_box::BoundingBox;
 
 pub fn get_city_coordinates(city_name: &str) -> Result<(f64, f64), Box<dyn Error>> {
+    println!("Obtendo a cidade {}...", city_name);
+    let start_time = std::time::Instant::now();
     let client = Client::new();
 
     let query = format!(
@@ -44,17 +46,30 @@ pub fn get_city_coordinates(city_name: &str) -> Result<(f64, f64), Box<dyn Error
                     continue;
                 }
             };
+            println!(
+                "Tempo gasto para obter a cidade: {:.2?}",
+                start_time.elapsed()
+            );
+            println!();
             return Ok((lat, lon));
         }
     }
-
+    println!(
+        "Tempo gasto: {:.2?}",
+        start_time.elapsed()
+    );
+    println!();
     Err(format!("Cidade '{}' não encontrada", city_name).into())
 }
 
 
 pub fn get_all_cities_from_bounding_box(
     bbox: BoundingBox,
+    root: String,
+    objective: String,
 ) -> Result<Vec<(String, f64, f64)>, Box<dyn Error>> {
+    let mut start_time = std::time::Instant::now();
+    println!("Obtendo as cidades entre {} e {}...", root, objective);
     let client = Client::new();
 
     let query = format!(
@@ -86,6 +101,10 @@ pub fn get_all_cities_from_bounding_box(
             }
         }
     }
-
+    println!(
+        "Tempo gasto para obter as cidades: {:.2?}",
+        start_time.elapsed()
+    );
+    println!();
     Ok(cities)
 }

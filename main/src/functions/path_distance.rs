@@ -3,7 +3,6 @@ use petgraph::graph::NodeIndex;
 
 pub fn calculate_path_distance(graph: &GraphStructure, path: Vec<NodeIndex>) -> f64 {
     let mut total_distance = 0.0;
-    println!("Calculando distância para o caminho:");
     
     for i in 0..path.len() - 1 {
         let current_node = path[i];
@@ -20,6 +19,5 @@ pub fn calculate_path_distance(graph: &GraphStructure, path: Vec<NodeIndex>) -> 
         total_distance += weight;
     }
     
-    println!("Distância total: {}", total_distance);
     total_distance
 }

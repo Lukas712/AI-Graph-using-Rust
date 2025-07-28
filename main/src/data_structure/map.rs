@@ -118,7 +118,11 @@ impl Map {
 
     fn create_map_cities(&mut self) -> Result<(), Box<dyn std::error::Error>> 
     {
-        let all_cities = get_all_cities_from_bounding_box(self.bbox.as_ref().unwrap().clone())?;
+        let all_cities = get_all_cities_from_bounding_box(
+            self.bbox.as_ref().unwrap().clone(),
+            self.graph.get_city(self.graph.get_root().unwrap()).unwrap().get_name().to_string(),
+            self.graph.get_city(self.graph.get_objective().unwrap()).unwrap().get_name().to_string(),
+        )?;
         
         for city in all_cities {
             let newCity = City::new(
