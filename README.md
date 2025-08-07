@@ -8,8 +8,13 @@
 No terminal, execute o seguinte comando:
 
 ```
-cd main/
+cd main/src/
+
+// Para Linux
 ./main
+
+// Para Windows
+./main.exe
 ```
 
 ## Documentação:
