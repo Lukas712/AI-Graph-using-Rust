@@ -10,10 +10,10 @@ No terminal, execute o seguinte comando:
 ```
 cd main/src/
 
-// Para Linux
+# Para Linux
 ./main
 
-// Para Windows
+# Para Windows
 ./main.exe
 ```
 
